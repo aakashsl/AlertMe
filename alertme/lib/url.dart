@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class DomainReputationChecker extends StatefulWidget {
-  final String domain;
 
-  DomainReputationChecker({Key? key, required this.domain}) : super(key: key);
+  DomainReputationChecker({Key? key}) : super(key: key);
   static const routeName = "URL";
   @override
   _DomainReputationCheckerState createState() => _DomainReputationCheckerState();
@@ -13,6 +12,7 @@ class DomainReputationChecker extends StatefulWidget {
 
 class _DomainReputationCheckerState extends State<DomainReputationChecker> {
   bool _isTrustworthy = false;
+ late final String domain;
 
   @override
   void initState() {
@@ -21,7 +21,7 @@ class _DomainReputationCheckerState extends State<DomainReputationChecker> {
   }
 
   Future<void> _checkDomainReputation() async {
-    final apiEndpoint = 'http://localhost:5000/check_domain_reputation?domain=${widget.domain}';
+    final apiEndpoint = 'http://localhost:5000/check_domain_reputation?domain=${domain}';
     final response = await http.get(Uri.parse(apiEndpoint));
 
     if (response.statusCode == 200) {
