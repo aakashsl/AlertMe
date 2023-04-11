@@ -12,7 +12,7 @@ class SpamDetectorPage extends StatefulWidget {
 
 class _SpamDetectorPageState extends State<SpamDetectorPage> {
   final _headersController = TextEditingController();
-   String _isSpam="" ;
+   bool _isSpam = false;
 
 
 
@@ -38,10 +38,10 @@ class _SpamDetectorPageState extends State<SpamDetectorPage> {
               onPressed: _detectSpamSMS,
               child: Text('Detect Spam'),
             ),
-            SizedBox(height: 16),
-            
+            SizedBox(height: 16),    
+            if (_isSpam)
               Text(
-                _isSpam.toString(),
+                'This SMS message is spam',
                 style: TextStyle(
                   color: Colors.red,
                   fontWeight: FontWeight.bold,
