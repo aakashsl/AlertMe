@@ -1,4 +1,5 @@
 import 'package:alertme/sms.dart';
+import 'package:alertme/url.dart';
 import 'package:flutter/material.dart';
 void main() {
   runApp(AlertMe());
@@ -13,6 +14,7 @@ class AlertMe extends StatelessWidget {
       home:Home() ,
       routes: {
         SpamDetectorPage.routeName:(context) => SpamDetectorPage(),
+        DomainReputationChecker.routeName:(context) => DomainReputationChecker(),
       },
     );
   }
@@ -34,7 +36,9 @@ class Home extends StatelessWidget {
           Navigator.pushNamed(context, SpamDetectorPage.routeName);
         }, child: Text("SMS")),
         SizedBox(height: 10,),
-         ElevatedButton(onPressed: (){}, child: Text("URL"))],
+         ElevatedButton(onPressed: (){
+          Navigator.pushNamed(context, DomainReputationChecker.routeName);
+         }, child: Text("URL"))],
       ),
     ),
     );

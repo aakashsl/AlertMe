@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
 
 class SpamDetectorPage extends StatefulWidget {
-  static const routeName = "SMS";
   @override
+  static const routeName = "SMS";
   _SpamDetectorPageState createState() => _SpamDetectorPageState();
 }
 
 class _SpamDetectorPageState extends State<SpamDetectorPage> {
   final _headersController = TextEditingController();
+  final _messageController = TextEditingController();
   bool _isSpam = false;
+  String _notSpamMessage = '';
 
   @override
   Widget build(BuildContext context) {
@@ -25,16 +26,14 @@ class _SpamDetectorPageState extends State<SpamDetectorPage> {
             TextField(
               controller: _headersController,
               decoration: InputDecoration(
-                labelText: 'SMS Headers',
+                labelText: 'SMS Message',
                 hintText: 'Enter the headers of the SMS message',
               ),
               maxLines: null,
             ),
             SizedBox(height: 16),
             ElevatedButton(
-              onPressed: () {
-                sendPostRequest(_headersController.text);
-              },
+              onPressed: _detectSpamSMS,
               child: Text('Detect Spam'),
             ),
             SizedBox(height: 16),
@@ -47,29 +46,40 @@ class _SpamDetectorPageState extends State<SpamDetectorPage> {
                   fontSize: 18,
                 ),
               ),
+             !_isSpam && _headersController.text.length>0?
+              Text(
+                'Not spam message',
+                style: TextStyle(
+                  color: Colors.green,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+              ):Text(""),
+              _headersController.text.length==0?
+              Text(
+                'Enter Message here',
+                style: TextStyle(
+                  color: Color.fromARGB(255, 0, 213, 255),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+              ):Text(""),
           ],
         ),
       ),
     );
   }
-
-  Future<void> sendPostRequest(headers) async {
-    final url = Uri.parse('https://example.com/api/post');
-
-    final body = {'headers': headers};
-
+  Future<void> _detectSpamSMS() async {
+    final headers = _headersController.text;
+    final url = 'http://localhost:5000/detect-spam-sms';
     final response = await http.post(
-      url,
+      Uri.parse(url),
+      body: jsonEncode({'headers': headers}),
       headers: {'Content-Type': 'application/json'},
-      body: json.encode(body),
     );
-
-    if (response.statusCode == 200) {
-      // Handle success response
-      print('Post request successful');
-    } else {
-      // Handle error response
-      print('Post request failed with status: ${response.statusCode}');
-    }
+    final result = jsonDecode(response.body);
+    setState(() {
+      _isSpam = result['is_spam'];
+    });
   }
 }
