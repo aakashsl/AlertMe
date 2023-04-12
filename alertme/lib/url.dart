@@ -1,42 +1,19 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 
-class DomainReputationChecker extends StatefulWidget {
-
-  DomainReputationChecker({Key? key}) : super(key: key);
+class MyHtmlWidget extends StatelessWidget {
   static const routeName = "URL";
   @override
-  _DomainReputationCheckerState createState() => _DomainReputationCheckerState();
-}
-
-class _DomainReputationCheckerState extends State<DomainReputationChecker> {
-  bool _isTrustworthy = false;
- late final String domain;
-
-  @override
-  void initState() {
-    super.initState();
-    _checkDomainReputation();
-  }
-
-  Future<void> _checkDomainReputation() async {
-    final apiEndpoint = 'http://localhost:5000/check_domain_reputation?domain=${domain}';
-    final response = await http.get(Uri.parse(apiEndpoint));
-
-    if (response.statusCode == 200) {
-      final json = jsonDecode(response.body);
-      setState(() {
-        _isTrustworthy = json['isTrustworthy'];
-      });
-    } else {
-      // Handle error case
-      print('Failed to check domain reputation: ${response.statusCode}');
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Text(_isTrustworthy ? 'This domain is trustworthy.' : 'This domain is not trustworthy.');
+    return Scaffold(
+      appBar: AppBar(title: Text("URl - AlertMe"),),
+      body: SingleChildScrollView(
+
+        child: Html(
+          data: '<div width="100%" height="100%" ><iframe src="https://nediveil.in" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0"></iframe></div>',
+        ),
+      ),
+    );
   }
 }

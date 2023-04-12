@@ -71,7 +71,7 @@ class _SpamDetectorPageState extends State<SpamDetectorPage> {
   }
   Future<void> _detectSpamSMS() async {
     final headers = _headersController.text;
-    final url = 'http://localhost:5000/detect-spam-sms';
+    final url = 'https://alertme.pythonanywhere.com/detect-spam-sms';
     final response = await http.post(
       Uri.parse(url),
       body: jsonEncode({'headers': headers}),

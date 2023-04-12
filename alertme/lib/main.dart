@@ -10,11 +10,11 @@ class AlertMe extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp( debugShowCheckedModeBanner: false,
       home:Home() ,
       routes: {
         SpamDetectorPage.routeName:(context) => SpamDetectorPage(),
-        DomainReputationChecker.routeName:(context) => DomainReputationChecker(),
+        MyHtmlWidget.routeName:(context) => MyHtmlWidget(),
       },
     );
   }
@@ -37,7 +37,7 @@ class Home extends StatelessWidget {
         }, child: Text("SMS")),
         SizedBox(height: 10,),
          ElevatedButton(onPressed: (){
-          Navigator.pushNamed(context, DomainReputationChecker.routeName);
+          Navigator.pushNamed(context, MyHtmlWidget.routeName);
          }, child: Text("URL"))],
       ),
     ),
