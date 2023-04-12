@@ -25,7 +25,9 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(
+    return Scaffold(
+      backgroundColor: Colors.cyan,
+      appBar: AppBar(
       title: Text("AlertMe"),
     ),
     body: Center(
@@ -34,11 +36,31 @@ class Home extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [ElevatedButton(onPressed: (){
           Navigator.pushNamed(context, SpamDetectorPage.routeName);
-        }, child: Text("SMS")),
+        }, 
+        child: Container(
+                  height: 40,
+                  width: 220,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                     ),
+                  alignment: Alignment.center,
+                  child: Text("SMS",
+                      style: TextStyle(
+                        color: Color(0xffffffff),
+                        fontSize: 20,
+                      )),
+                ),),
         SizedBox(height: 10,),
-         ElevatedButton(onPressed: (){
-          Navigator.pushNamed(context, MyHtmlWidget.routeName);
-         }, child: Text("URL"))],
+         Container(
+          height: 40,
+          width: 250,
+           child: ElevatedButton(onPressed: (){
+            Navigator.pushNamed(context, MyHtmlWidget.routeName);
+           }, child: Text("URL", style: TextStyle(
+                        color: Color(0xffffffff),
+                        fontSize: 20,
+                      ))),
+         )],
       ),
     ),
     );

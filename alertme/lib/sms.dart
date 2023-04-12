@@ -23,13 +23,19 @@ class _SpamDetectorPageState extends State<SpamDetectorPage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            TextField(
-              controller: _headersController,
-              decoration: InputDecoration(
-                labelText: 'SMS Message',
-                hintText: 'Enter the headers of the SMS message',
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 100,vertical: 30),
+              child: TextField(
+                
+                controller: _headersController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'SMS Message',
+                  hintText: 'Enter the headers of the SMS message',
+                ),
+                
+                maxLines: null,
               ),
-              maxLines: null,
             ),
             SizedBox(height: 16),
             ElevatedButton(
